@@ -34,4 +34,15 @@ Vagrant::Config.run do |all_config|
       chef.add_recipe "couchbase::joincluster"
     end
   end
+
+  all_config.vm.define :client do |config|
+    config.vm.box = "base_redux"
+    config.vm.network :hostonly, "33.33.33.13"
+    config.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = "~/development/cookbooks"
+      chef.add_recipe "couchbase::client"
+    end
+  end
+
 end
+
